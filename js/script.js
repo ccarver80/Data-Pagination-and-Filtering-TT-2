@@ -45,7 +45,8 @@ let pages = data.length / 9;
 let pageNumber = Math.ceil(pages);
 
 function addPagination() {
-  
+  const linkList = document.querySelector("ul.link-list");
+
   for (let i = 1; i <= pageNumber; i++) {
     const divPagination = document.querySelector("div.pagination");
     const linkList = document.querySelector("ul.link-list");
@@ -65,16 +66,33 @@ function addPagination() {
     li.appendChild(button);
     linkList.appendChild(li);
 
+    const buttonActive = document.querySelector('button');
+    buttonActive.className = 'active';
+
     let start = button.value * 9 - 9;
     let stop = start + 9;
 
-    button.addEventListener("click", () => {
+    button.addEventListener("click", (e) => {
 
        // Makes sure stop value isnt larger than the end of the list
       if (stop > data.length) {
         stop = data.length;
       }
 
+      //button clicked is targeted
+      e.target = document.querySelector('button')
+
+      // finds button that has a class of active
+      const clearButton = document.querySelector('button.active');
+
+      //deletes class 
+      clearButton.className = '';
+
+      //if button clicked is empty class sets to active class
+      if (e.target.className === '') {
+        
+        button.className = 'active';
+      }
       
       //clears current list to empty string
       removeList.innerHTML = "";
